@@ -7,6 +7,7 @@ const generateToken = (id) =>
 export const register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
+     console.log('name, ', email , password, name )
 
     if (!name || !email || !password) {
       return res.status(400).json({ success: false, message: "All fields are required" });
@@ -34,12 +35,13 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
+      console.log('emai', email, password)
     if (!email || !password) {
       return res.status(400).json({ success: false, message: "Email and password are required" });
     }
 
     const user = await User.findOne({ email }).select("+password");
+    console.log('use', user)
     if (!user || !(await user.matchPassword(password))) {
       return res.status(401).json({ success: false, message: "Invalid email or password" });
     }
